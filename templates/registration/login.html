@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Create Account</title>
+  
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="brand-area">
+      <h1 class="brand-title">Finance Tracker</h1>
+    </div>
+    <div class="form-area">
+      <form class="signup-form" method="post">
+        {% csrf_token %}
+        <h2 class="form-heading">Log in your Account</h2>
+        <div class="input-group">
+          <label for="fullName">Username</label>
+          <input id="fullName" name='username' type="text" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password1" name="password" type="password" placeholder="Enter your password" required>
+            
+        </div>
+        {% if form.non_field_errors %}
+        <div class="text-red-600 text-sm">
+            {% for error in non_field_errors %}
+            <p>{{error}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <button type="submit" class="btn-submit">Login</button>
+        <div class="alt-link">
+          New user? <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+        <div class="alt-link">
+           <a href="{% url 'password_reset' %}">forgot password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+</body>
+
+</html>
+
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(120deg, #d9afd9 0%, #97d9e1 100%);
+}
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-area {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.brand-title {
+  font-size: 40px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-area {
+  width: 360px;
+  padding: 30px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-heading {
+  font-size: 24px;
+  color: #333333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #444444;
+}
+
+.input-group input {
+  padding: 12px 14px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #007bff;
+}
+
+.password-strength {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background-color: #ddd;
+  border-radius: 3px;
+  margin-top: 5px;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0;
+  background-color: #ff4b4b;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.remember-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-submit {
+  padding: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+.alt-link {
+  font-size: 14px;
+  text-align: center;
+  color: #666666;
+}
+
+.alt-link a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+.alt-link a:hover {
+  color: #0056b3;
+}
+
+</style>
