@@ -21,3 +21,18 @@ class RegisterView(View):
 class DashboardView(LoginRequiredMixin,View):
     def get(self,request,*args,**kwargs):
         return render(request, 'dashboard.html')
+    
+class TransactionCreateView(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        form = TransactionForm()
+        return render(request, 'transaction.html',{'form':form})
+    
+    def post(self,request,*args,**kwargs):
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            transaction=form.save(commit=False)
+            transaction.user = request.user
+            transaction.save()   
+            return redirect('dashboard')
+        print(form.errors)           
+        return render(request, 'transaction.html', {'form': form})

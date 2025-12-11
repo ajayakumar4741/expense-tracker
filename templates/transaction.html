@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %} Transaction Page {% endblock %}
+
+
+{% block content %}
+<br>
+<br>
+<div class="col-8">
+    <form action="" method="post">
+        {% csrf_token %}
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Add your Transaction</h6>
+        <div class="form-floating mb-3">
+            <input type="text" name="title" class="form-control" id="floatingInput" placeholder="Add your title">
+            <label for="floatingInput">Title</label>
+            {% if form.title.errors %}
+            {% for error in form.title.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="amount" step="0.01" min="0.01" required class="form-control" id="floatingPassword" placeholder="Enter your expense">
+            <label for="floatingPassword">Amount</label>
+            {% if form.amount.errors %}
+            {% for error in form.amount.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
+                <option selected>Select your transaction type</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
+                </select>
+            <label for="">transaction type</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" name="date" class="form-control" id="floatingInput" placeholder="Add your title">
+            <label for="floatingInput">Date</label>
+            {% if form.date.errors %}
+            {% for error in form.date.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="category" class="form-control" id="floatingInput" placeholder="Add your category">
+            <label for="floatingInput">Category</label>
+            {% if form.category.errors %}
+            {% for error in form.category.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating">
+            <button type="submit" class="btn btn-primary">Add Transaction</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+        
+    </div>
+    </form>
+</div>
+<br>
+<br>
+{% endblock %}
