@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Transactions</h6>
+                        
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Transaction Type</th>
+                                    <th scope="col">Transaction Id</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                    
+                                   
+                                    <td>{{transaction.date}}</td>
+                                    <td>{{transaction.title}}</td>
+                                    <td>{{transaction.amount|floatformat:2}}</td>
+                                    <td>{{transaction.transaction_type}}</td>
+                                    <td>{{transaction.id}}</td>
+                                    {% if transaction.transaction_type == 'Income' %}
+                                    <td>Credit</td>
+                                    {% else %}
+                                    <td>Debit</td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

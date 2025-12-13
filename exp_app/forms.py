@@ -13,3 +13,8 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['title','amount','transaction_type','date','category']
+        
+class GoalForm(forms.ModelForm):
+    class Meta:
+        model = Goal
+        fields = ['name','target_amount','deadline']

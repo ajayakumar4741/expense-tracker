@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Goals {% endblock %}
+{% block content %}
+<br>
+<br>
+<div class="col-8">
+    <form action="" method="post">
+        {% csrf_token %}
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Set your financial goal</h6>
+        <div class="form-floating mb-3">
+            <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Add your goal name">
+            <label for="floatingInput">Name of Your Goal</label>
+            {% if form.name.errors %}
+            {% for error in form.name.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="target_amount" step="0.01" min="0.01" required class="form-control" id="floatingPassword" placeholder="Enter your target amount">
+            <label for="floatingPassword">Target Amount</label>
+            {% if form.target_amount.errors %}
+            {% for error in form.target_amount.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" value="0" name="current_amount" step="0.01" min="0.01" required class="form-control" id="floatingPassword" placeholder="Enter your current amount">
+            <label for="floatingPassword">Current Amount</label>
+            {% if form.current_amount.errors %}
+            {% for error in form.current_amount.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" name="deadline" required min="{% now 'Y-m-d' %}" required class="form-control" id="floatingPassword" placeholder="Enter your current amount">
+            <label for="floatingPassword">Deadline</label>
+            {% if form.date.errors %}
+            {% for error in form.date.errors %}
+            <p class="mt-1 text-sm text-red-600">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-floating">
+            <button type="submit" class="btn btn-primary">Add Goal</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+        
+    </div>
+    </form>
+</div>
+<br>
+<br>
+{% endblock %}
