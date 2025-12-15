@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}List of your goals{% endblock title %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Your Goals</h6>
+                        
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Target Amount</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Progress</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in goal_progress %}
+                                <tr>
+                    
+                                   
+                                    <td>{{item.goal.id}}</td>
+                                    <td>{{item.goal.name}}</td>
+                                    <td>{{item.goal.target_amount|floatformat:2}}</td>
+                                    <td>{{item.goal.deadline}}</td>
+                                    <td>{{ item.progress|floatformat:2 }}%</td>
+                                   
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

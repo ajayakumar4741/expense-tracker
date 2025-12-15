@@ -31,7 +31,14 @@
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-
+{% if messages %}
+        {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+        {% endfor %}
+    {% endif %}
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
@@ -47,7 +54,38 @@
         <!-- Content Start -->
          <div class="content">
             <!-- Navbar Start -->
-            {% include 'navbar.html' %}
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                {% block nav_search %}              
+                
+                
+                {% endblock nav_search %}
+                <div class="navbar-nav align-items-center ms-auto">
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Welcome {{request.user|capfirst}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            
+                            {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                            <button class="dropdown-item">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
             <!-- Navbar End -->
         {% block content %}
         {% endblock %}

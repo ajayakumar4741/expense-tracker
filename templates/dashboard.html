@@ -12,7 +12,7 @@
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
+                    <div class="col-sm-6 col-xl-4">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
+                    <div class="col-sm-6 col-xl-4">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
+                    <div class="col-sm-6 col-xl-4">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
@@ -39,15 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <!-- Sale & Revenue End -->
@@ -56,24 +48,38 @@
             <!-- Sales Chart Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
+                    <div class="col-12">
                         <div class="bg-light text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Worldwide Sales</h6>
-                                <a href="">Show All</a>
+                                <h6 class="mb-0">Your goals</h6>
+                                <a href="{% url 'goal_list' %}">Show All</a>
                             </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Target Amount</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in goal_progress %}
+                                    <tr>
+                                    <th scope="row">{{item.goal.id}}</th>
+                                    <td>{{item.goal.name}}</td>
+                                    <td>{{item.goal.target_amount|floatformat:2}}</td>
+                                    <td>{{item.goal.deadline}}</td>
+                                    <td>{{item.progress|floatformat:2}}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </table>
                             <canvas id="worldwide-sales"></canvas>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Salse & Revenue</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <canvas id="salse-revenue"></canvas>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <!-- Sales Chart End -->
@@ -95,11 +101,12 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Transaction Type</th>
-                                    <th scope="col">Transaction Id</th>
+                                    
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 {% for transaction in transactions %}
                                 <tr>
                     
@@ -108,7 +115,7 @@
                                     <td>{{transaction.title}}</td>
                                     <td>{{transaction.amount|floatformat:2}}</td>
                                     <td>{{transaction.transaction_type}}</td>
-                                    <td>{{transaction.id}}</td>
+                                    
                                     {% if transaction.transaction_type == 'Income' %}
                                     <td>Credit</td>
                                     {% else %}
@@ -116,9 +123,14 @@
                                     {% endif %}
                                 </tr>
                                 {% endfor %}
+                                
                             </tbody>
-                        </table>
+                        </table>                        
                     </div>
+                    <br>
+                    {% if transactions %}
+                    <a href="{% url 'transaction_report' %}"  class="btn btn-primary">Generate Report</a>
+                    {% endif %}
                 </div>
             </div>
             <!-- Recent Sales End -->

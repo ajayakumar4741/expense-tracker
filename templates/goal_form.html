@@ -27,15 +27,7 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div class="form-floating mb-3">
-            <input type="number" value="0" name="current_amount" step="0.01" min="0.01" required class="form-control" id="floatingPassword" placeholder="Enter your current amount">
-            <label for="floatingPassword">Current Amount</label>
-            {% if form.current_amount.errors %}
-            {% for error in form.current_amount.errors %}
-            <p class="mt-1 text-sm text-red-600">{{error}}</p>
-            {% endfor %}
-            {% endif %}
-        </div>
+        
         <div class="form-floating mb-3">
             <input type="date" name="deadline" required min="{% now 'Y-m-d' %}" required class="form-control" id="floatingPassword" placeholder="Enter your current amount">
             <label for="floatingPassword">Deadline</label>

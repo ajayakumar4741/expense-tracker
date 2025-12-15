@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+
+{% block nav_search %}
+<form method="get" class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" name="q" placeholder="Search">
+                    <button type="submit" class="btn btn-primary ms-2">Search</button>
+                </form>
+                {% endblock nav_search %}
 {% block content %}
 <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
@@ -16,7 +23,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Transaction Type</th>
-                                    <th scope="col">Transaction Id</th>
+                                    
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -29,7 +36,7 @@
                                     <td>{{transaction.title}}</td>
                                     <td>{{transaction.amount|floatformat:2}}</td>
                                     <td>{{transaction.transaction_type}}</td>
-                                    <td>{{transaction.id}}</td>
+                                    
                                     {% if transaction.transaction_type == 'Income' %}
                                     <td>Credit</td>
                                     {% else %}
