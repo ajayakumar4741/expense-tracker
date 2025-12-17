@@ -9,7 +9,10 @@ from .admin import *
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db.models import Q
-
+import pandas as pd
+import io
+import urllib, base64
+import matplotlib.pyplot as plt
 
 # def search_transactions(request):
 #     query = request.GET.get('q')  # get search term from ?q=...
@@ -32,6 +35,44 @@ from django.db.models import Q
 #     return render(request, 'transactions.html', context)
 
 
+def summarize_expense_data(user):
+    expenses = Transaction.objects.filter(user=user, transaction_type='Expense')
+    df = pd.DataFrame(list(expenses.values('category','amount')))
+    
+    if df.empty:
+        return None,None
+    
+    summary = df.groupby('category')['amount'].sum().sort_values(ascending=False)
+    categories = summary.index.tolist()
+    amounts = summary.values.tolist()
+    
+    
+    return categories, amounts
+
+def get_bar_chart(categories, amounts):
+    # Set a non-GUI backend for systems without display servers
+    plt.switch_backend('Agg') 
+    plt.figure(figsize=(10, 6))
+    plt.bar(categories, amounts, color='skyblue')
+    plt.xticks(rotation=45, ha='right')
+    plt.title('Expenses by Category')
+    plt.xlabel('Category')
+    
+    plt.ylabel('Amount')
+    plt.tight_layout()
+
+    # Save the plot to a BytesIO object
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close() # Close the figure to free memory
+
+    # Encode the image to Base64
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    buf.close()
+    
+    return image_base64
+
 class RegisterView(View):
     def get(self,request,*args,**kwargs):
         form=RegForm()
@@ -49,6 +90,11 @@ class RegisterView(View):
             
 class DashboardView(LoginRequiredMixin,View):
     def get(self,request,*args,**kwargs):
+        
+        categories, amounts = summarize_expense_data(request.user)
+        chart_data = None
+        if categories and amounts:
+            chart_data = get_bar_chart(categories, amounts)
         
         transactions = Transaction.objects.filter(user=request.user).order_by('-date')[:5]
         goals = Goal.objects.filter(user=request.user)[:5]
@@ -77,7 +123,8 @@ class DashboardView(LoginRequiredMixin,View):
             'total_expense':total_expense,
             'transactions':transactions,
             'net_savings':net_savings,
-            'goal_progress':goal_progress
+            'goal_progress':goal_progress,
+            'chart_data':chart_data
         }
         return render(request, 'dashboard.html',context)
     
