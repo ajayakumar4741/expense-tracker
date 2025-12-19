@@ -11,8 +11,9 @@ from django.contrib import messages
 from django.db.models import Q
 import pandas as pd
 import io
-import urllib, base64
+import base64
 import matplotlib.pyplot as plt
+from django.contrib.auth.decorators import login_required
 
 # def search_transactions(request):
 #     query = request.GET.get('q')  # get search term from ?q=...
@@ -226,3 +227,37 @@ def export_transaction(request):
     response['Content-Disposition'] = 'attachment; filename=transactions_report.xlsx'
     return response
 
+# READ
+@login_required
+def profile_view(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    return render(request, 'user_profile.html',{'profile': profile})
+
+# UPDATE
+@login_required
+def profile_update(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=profile)
+
+    return render(request, 'profile_update.html', {
+        'u_form': u_form,
+        'p_form': p_form
+    })
+
+# DELETE
+@login_required
+def profile_delete(request):
+    if request.method == 'POST':
+        request.user.delete()
+        return redirect('login')
+    return render(request, 'profile_delete.html')

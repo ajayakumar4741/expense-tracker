@@ -1,0 +1,31 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile_forms.css' %}">
+</head>
+<body>
+
+<div class="page-container">
+    <div class="form-card">
+        <h2>✨ Update Your Profile</h2>
+        <p class="subtitle">Keep your information fresh and updated</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ u_form.as_p }}
+                {{ p_form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-primary">Save Changes</button>
+            <a href="{% url 'profile' %}" class="btn-secondary">Back to Profile</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

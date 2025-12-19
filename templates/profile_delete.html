@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="{% static 'css/profile_forms.css' %}">
+</head>
+<body>
+
+<div class="page-container">
+    <div class="form-card danger-card">
+        <h2>⚠️ Delete Account</h2>
+        <p class="subtitle danger-text">
+            This action is permanent and cannot be undone.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">
+                Yes, Delete My Account
+            </button>
+            <a href="{% url 'profile' %}" class="btn-secondary">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

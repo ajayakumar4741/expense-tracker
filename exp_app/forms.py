@@ -18,3 +18,18 @@ class GoalForm(forms.ModelForm):
     class Meta:
         model = Goal
         fields = ['name','target_amount','deadline']
+        
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'phone', 'location', 'profile_image']
+        widgets = {
+            'profile_image': forms.FileInput(),  # ✅ removes "Currently / Clear"
+        }

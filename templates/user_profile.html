@@ -1,0 +1,39 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}"> 
+</head>
+<body>
+<div class="profile-card">
+
+    {% if profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}" class="avatar">
+    {% else %}
+        <img src="{% static 'images/default.png' %}" class="avatar">
+    {% endif %}
+
+    <h2>{{ user.get_full_name|default:user.username }}</h2>
+    <p class="username">@{{ user.username }}</p>
+
+    <div class="info">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone|default:"—" }}</p>
+        <p><strong>Location:</strong> {{ profile.location|default:"—" }}</p>
+        <p class="bio">{{ profile.bio|default:"No bio added yet." }}</p>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'profile_update' %}" class="btn">Edit Profile</a>
+        <a href="{% url 'profile_delete' %}" class="btn danger">Delete Account</a>
+        <a href="{% url 'dashboard' %}" class="btn">Go back</a>
+    </div>
+
+</div>
+</body>
+</html>
+
+
+

@@ -1,5 +1,7 @@
 from .views import *
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('register/',RegisterView.as_view(),name='register'),
@@ -9,5 +11,8 @@ urlpatterns = [
     path('transactions/',TransactionListView.as_view(),name='transaction_list'),
     path('goal_list/',GoalListView.as_view(),name='goal_list'),
     path('transaction_report/',export_transaction,name='transaction_report'),
-    # path('search_transactions/',search_transactions,name='search_transactions'),
+    path('profile/', profile_view, name='profile'),
+    path('profile/update/', profile_update, name='profile_update'),
+    path('profile/delete/', profile_delete, name='profile_delete'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

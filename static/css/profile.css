@@ -1,0 +1,53 @@
+ body {
+    background: linear-gradient(120deg, #667eea, #764ba2);
+    font-family: Arial;
+}
+
+.profile-card {
+    width: 350px;
+    margin: 60px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    color: gray;
+    margin-top: -10px;
+}
+
+.info p {
+    margin: 8px 0;
+}
+
+.bio {
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 10px 5px;
+}
+
+.btn:hover {
+    background: #5a67d8;
+}
+
+.danger {
+    background: crimson;
+}
