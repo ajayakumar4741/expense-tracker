@@ -67,7 +67,7 @@
                                 <tbody>
                                     {% for item in goal_progress %}
                                     <tr>
-                                    <th scope="row">{{item.goal.id}}</th>
+                                    <th scope="row">{{forloop.counter}}</th>
                                     <td>{{item.goal.name}}</td>
                                     <td>{{item.goal.target_amount|floatformat:2}}</td>
                                     <td>{{item.goal.deadline}}</td>
